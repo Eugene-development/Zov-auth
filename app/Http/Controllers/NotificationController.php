@@ -20,6 +20,10 @@ class NotificationController extends Controller
         'quiz'               => 'Тест по кухне (расчёт цены)',
         'style-consultation' => 'Стилевая консультация',
         'consultation'       => 'Консультация',
+        'promo-code'         => 'Запрос промокода на скидку 10%',
+        'design-project'     => 'Заказ дизайн-проекта',
+        'careers'            => 'Отклик на вакансию',
+        'partnership'        => 'Заявка на партнёрство',
         'general'            => 'Общая заявка',
     ];
 
@@ -35,7 +39,7 @@ class NotificationController extends Controller
             ]);
 
             $request->validate([
-                'form_type'  => 'required|string|in:designer,showroom,quiz,style-consultation,consultation,general',
+                'form_type'  => 'required|string|in:designer,showroom,quiz,style-consultation,consultation,promo-code,design-project,careers,partnership,general',
                 'name'       => 'required|string|max:255',
                 'phone'      => 'required|string|max:50',
                 'message'    => 'nullable|string|max:2000',
@@ -56,7 +60,7 @@ class NotificationController extends Controller
                 'client_message' => $request->message ?? 'Не указано',
                 'source_url'     => $request->source_url ?? 'Не указано',
                 'extra'          => $request->extra ?? [],
-                'submitted_at'   => now()->format('d.m.Y H:i:s'),
+                'submitted_at'   => now()->setTimezone('Europe/Moscow')->format('d.m.Y H:i:s') . ' (МСК)',
             ];
 
             // Send email
